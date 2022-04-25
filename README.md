@@ -10,7 +10,7 @@ These aren't particularly specific to slim and can be use in other contexts or o
 
 ## INSTALLATION
 ```
-composer require hxgf/slime-utils
+composer require hxgf/slime-utils:0.1.0@dev
 ```
 
 ```php
