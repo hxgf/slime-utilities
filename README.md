@@ -1,4 +1,4 @@
-# SLIME Utils
+# SLIME utils
 
 ## A set of abstraction functions to promote a fast and easy development workflow with Slim.
 
