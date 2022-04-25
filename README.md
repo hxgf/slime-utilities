@@ -1,4 +1,4 @@
-# SLIME Utilities
+# SLIME Utils
 
 ## A set of abstraction functions to promote a fast and easy development workflow with Slim.
 
@@ -15,11 +15,11 @@ composer require hxgf/slime-utils
 
 ```php
 
-use XPRSS\render;
-use XPRSS\db;
-use XPRSS\http;
-use XPRSS\cookie;
-use XPRSS\x;
+use Slime\render;
+use Slime\db;
+use Slime\http;
+use Slime\cookie;
+use Slime\x;
 
 require __DIR__ . '/vendor/autoload.php';
 
