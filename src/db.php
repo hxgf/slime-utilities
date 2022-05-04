@@ -5,11 +5,12 @@ namespace Slime;
 class db {
   
 	// connect to the database
-	public static function init($settings){
+	public static function init($args){
 		$dbh = false;
-		if ($settings['host']){
+		if ($args['host']){
+      $args['driver'] = $args['driver'] ? $args['driver'] : 'mysql';
 			try {
-			  $dbh = new PDO("mysql:host=".$settings['host'].";dbname=".$settings['name'], $settings['user'], $settings['password']);
+			  $dbh = new PDO($args['driver'].":host=".$args['host'].";dbname=".$args['name'], $args['user'], $args['password']);
 				$dbh->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 			}
 			catch(PDOException $e) {
@@ -33,12 +34,12 @@ class db {
 	}
 
   // sanitize parameters and retrieve data from mysql, returning array w/ total
-  public static function find($table, $where, $options = false){
+  public static function find($table, $where, $args = false){
     $qr = false;
     $wd = db::db_where_placeholders($where);
     try {
       $query = "SELECT * FROM $table WHERE " . $wd['where'];
-      if ($options['raw']){
+      if ($args['raw']){
         $query = $wd['where'];
       }
       $a = $GLOBALS['database']->prepare($query);
@@ -48,16 +49,16 @@ class db {
     catch(PDOException $e) {
       echo $e->getMessage();
     }
-    if ($options['cache'] && function_exists("apc_store")){
+    if ($args['cache'] && function_exists("apc_store")){
       $cache_key = base64_encode($table.$where);
       if ($qr = apc_fetch($cache_key)){
       }else{
-        $_options = $options;
-        $_options['cache'] = false;
-        $qr = db_find($table, $where, $options);
+        $_args = $args;
+        $_args['cache'] = false;
+        $qr = db_find($table, $where, $_args);
         $cache_length = 60;
-        if ($options['cache_length']){
-          $cache_length = $options['cache_length'];
+        if ($args['cache_length']){
+          $cache_length = $args['cache_length'];
         }
         apc_store($cache_key, $qr, $cache_length);
       }

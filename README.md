@@ -29,7 +29,8 @@ require __DIR__ . '/vendor/autoload.php';
 
 ### render - Render Content
 - render::json()
-- render::template()
+- render::twig()
+- render::hbs()
 
 ### db - Data Handlers (mysql w/ PDO)
 - db::init()
@@ -59,3 +60,6 @@ require __DIR__ . '/vendor/autoload.php';
 - x::br2nl()
 - x::array_encode()
 - x::array_decode()
+
+
+### db::where_placeholders($criteria)

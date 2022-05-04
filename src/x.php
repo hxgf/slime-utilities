@@ -18,28 +18,11 @@ class x {
 
 	// send an email (with mailgun api, if available, otherwise use php mail)
 	public static function email_send($input){
-		$message_html = false;
-		if ($input['template'] || $input['html']){
-      // fixit make this work
-			// if ($input['template']){
-			// 	$rendered_template = $GLOBALS['engine']->render($input['template'], $input['data']);
-			// 	if ($input['layout']){
-			// 		$layout = explode('[[outlet]]', $GLOBALS['engine']->render('_layouts/' . $input['layout'], $input['data']));
-			// 		$message_html = $layout[0];
-			// 		if (count($layout) > 1){
-			// 			$message_html .= $rendered_template;
-			// 		}
-			// 		$message_html .= $layout[1];
-			// 	}else{
-			// 		$message_html = $rendered_template;
-			// 	}
-			// }
-			if ($input['html']){
-				$message_html = $input['message'];					
-			}	
+    $message_html = false;
+		if ($input['html']){
+      $message_html = $input['message'];					
 			$message_text = strip_tags(x::br2nl($message_html));	
 		}
-
 		if ($GLOBALS['settings']['mailgun']['api_key']){
 			$message = array(
 				'from' => $input['from'],
@@ -61,19 +44,35 @@ class x {
 			}else{
 				$message['text'] = $input['message'];
 			}
-			$ch = curl_init();
-			curl_setopt($ch, CURLOPT_URL, "https://api.mailgun.net/v3/".$GLOBALS['settings']['mailgun']['domain']."/messages");
-			curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
-			curl_setopt($ch, CURLOPT_USERPWD, "api:".$GLOBALS['settings']['mailgun']['api_key']."");
-			curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-			curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-			curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-			curl_setopt($ch, CURLOPT_POST, true); 
-			curl_setopt($ch, CURLOPT_POSTFIELDS, $message);
-			$result = curl_exec($ch);
-			curl_close($ch);
-			return $result;
+			if ($input['preview']){
+				echo $message;
+			}
+			if ($input['debug']){
+				echo '<pre class="bg-black white">';
+				print_r($input);
+				echo "<hr />";
+				echo $headers;
+				echo "<hr />";
+				echo $message;
+				echo '</pre>';
+			}
+			if ($input['to'] && !$input['preview']&& !$input['debug']){
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, "https://api.mailgun.net/v3/".$GLOBALS['settings']['mailgun']['domain']."/messages");
+        curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
+        curl_setopt($ch, CURLOPT_USERPWD, "api:".$GLOBALS['settings']['mailgun']['api_key']."");
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 10);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
+        curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
+        curl_setopt($ch, CURLOPT_POST, true); 
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $message);
+        $result = curl_exec($ch);
+        curl_close($ch);
+        return $result;
+      }else{
+				return false;
+      }
 		}
 		else{
 			if ($message_html){
@@ -85,7 +84,6 @@ class x {
 				$message .= "\r\n\r\n--" . $boundary . "\r\n";
 				$message .= "Content-type: text/html;charset=utf-8\r\n\r\n" . $message_html;
 				$message .= "\r\n\r\n--" . $boundary . "--";
-
 			}else{
 				$message = $input['message'];
 			}
@@ -134,7 +132,7 @@ class x {
 	    $input = 'http://' . $input;
 		}	
 		$url_parts = parse_url($input);
-		$domain = preg_replace('/^www\./', '', $url_parts['host']);
+		$domain = str_replace('/','',preg_replace('/^www\./', '', $url_parts['host']));
 		return $domain;
 	}
 

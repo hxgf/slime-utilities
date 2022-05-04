@@ -2,6 +2,8 @@
 
 namespace Slime;
 
+use LightnCandy\LightnCandy;
+
 class render {
 
 	// render data as json string
@@ -18,9 +20,7 @@ class render {
     return $res->withHeader('content-type', 'application/json')->withStatus($status);
   }
 
-  // render a twig template w/ a given data array (and include global 'locals' array)
   public static function twig($req, $res, $args){
-    $template = $args['template'] . '.html';
     $data = [];
     $data['locals'] = $GLOBALS['locals'];
     if ($args['data']){
@@ -29,7 +29,43 @@ class render {
     if ($args['title']){
       $data['title'] = $args['title'];
     }
-    return Twig::fromRequest($req)->render($res, $template, $data);
+    return Twig::fromRequest($req)->render($res, $args['template'] . '.html', $data);
+  }
+
+  public static function lightncandy_html($args){
+    $template = file_get_contents( $GLOBALS['settings']['templates']['path'] .'/'. $args['template'] . $GLOBALS['settings']['templates']['extension'] );
+    if ($args['layout']){
+      $layout = explode('{{outlet}}', file_get_contents( $GLOBALS['settings']['templates']['path'] .'/'. $args['layout'] . $GLOBALS['settings']['templates']['extension'] ));
+      $template = $layout[0] . $template . $layout[1];
+    }
+    preg_match_all('/{{> ([^}}]+)/', $template, $partial_handles);
+    foreach ($partial_handles[1] as $handle){
+      $partials[$handle] = file_get_contents( $GLOBALS['settings']['templates']['path'] .'/'. $handle . $GLOBALS['settings']['templates']['extension'] );        
+    }
+    return LightnCandy::prepare(
+      LightnCandy::compile(
+        $template,
+        array(
+          "flags" => LightnCandy::FLAG_ELSE | LightnCandy::FLAG_PARENT,
+          "helpers" => $GLOBALS['hbars_helpers'],
+          "partials" => $partials
+        )
+      )
+    );
+  }
+
+  public static function hbs($req, $res, $args){
+    $data = [];
+    $data['locals'] = $GLOBALS['locals'];
+    if ($args['data']){
+      $data = array_merge($data, $args['data']);
+    }
+    if ($args['title']){
+      $data['title'] = $args['title'];
+    }
+    $body = $res->getBody();
+    $body->write(render::lightncandy_html($args)($data));
+    return $res->withStatus($args['status'] ? $args['status'] : 200);
   }
 
 }
