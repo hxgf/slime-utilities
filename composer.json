@@ -1,6 +1,6 @@
 {
-	"name": "hxgf/slime-utils",
-  "homepage": "https://github.com/hxgf/slime-utils",
+	"name": "hxgf/slime-utilities",
+  "homepage": "https://github.com/hxgf/slime-utilities",
 	"description": "Enhancement utilities for developing with Slim framework",
 	"type": "library",
   "license": "MIT",

@@ -1,4 +1,4 @@
-# SLIME utils
+# SLIME Utilities
 
 ## A set of abstraction functions to promote a fast and easy development workflow with Slim.
 
@@ -10,7 +10,7 @@ These aren't particularly specific to slim and can be use in other contexts or o
 
 ## INSTALLATION
 ```
-composer require hxgf/slime-utils:0.1.0@dev
+composer require hxgf/slime-utilities:0.1.0@dev
 ```
 
 ```php
