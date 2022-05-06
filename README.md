@@ -14,7 +14,7 @@ These functions are also available as separate packages:
 
 ## Installation
 ```
-composer require hxgf/slime-utilities:0.1.0@dev
+composer require hxgf/slime-utilities:0.2.0@dev
 ```
 
 ```php
