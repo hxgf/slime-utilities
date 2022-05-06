@@ -9,7 +9,7 @@ These functions are also available as separate packages:
 - [dbkit](https://github.com/hxgf/dbkit)
 - [http-request](https://github.com/hxgf/http-request)
 - [cookie](https://github.com/hxgf/cookie)
-- [aux](https://github.com/hxgf/aux)
+- [x-utilities](https://github.com/hxgf/x-utilities)
 
 
 ## Installation
@@ -61,7 +61,7 @@ Refer to the source packages for usage examples.
 - cookie::get($key)
 - cookie::delete($key)
 
-### [x - Misc Utilities](https://github.com/hxgf/aux)
+### [x - Misc Utilities](https://github.com/hxgf/x-utilities)
 - x::email_send($parameters)
 - x::client_ip()
 - x::url_slug($string)
