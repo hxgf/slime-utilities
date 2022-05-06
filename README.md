@@ -1,14 +1,18 @@
 # SLIME Utilities
 
-## A set of abstraction functions to promote a fast and easy development workflow with Slim.
+## Abstraction functions to promote a fast and easy development workflow with Slim.
+
+Most of these functions aren't specific to Slim and can be used in other contexts or on their own (except for the 'render' functions). We've bundled them together for convenience to be included with the [Slime boilerplate and metaframework](https://github.com/hxgf/slime).
+
+These functions are also available as separate packages:
+- [slime-render](https://github.com/hxgf/slime-render)
+- [dbkit](https://github.com/hxgf/dbkit)
+- [http-request](https://github.com/hxgf/http-request)
+- [cookie](https://github.com/hxgf/cookie)
+- [aux](https://github.com/hxgf/aux)
 
 
-These aren't particularly specific to slim and can be use in other contexts or on their own (except for the 'render' ones), but we've bundled them together to be included with the [slime] metaframework.
-
-
-
-
-## INSTALLATION
+## Installation
 ```
 composer require hxgf/slime-utilities:0.1.0@dev
 ```
@@ -27,39 +31,42 @@ require __DIR__ . '/vendor/autoload.php';
 
 ## API
 
-### render - Render Content
-- render::json()
-- render::twig()
-- render::hbs()
+Refer to the source packages for usage examples.
 
-### db - Data Handlers (mysql w/ PDO)
-- db::init()
-- db::insert()
-- db::find()
-- db::update()
-- db::delete()
-- db::where_placeholders()
+### [render - Render Content as PSR-7](https://github.com/hxgf/slime-render)
+- render::hbs($request, $response, $parameters)
+- render::json($request, $response, $parameters)
+- render::lightncandy_html($parameters)($data)
+- render::twig($request, $response, $parameters)
 
-### http - HTTP Request Handlers
-- http::request()
-- http::get()
-- http::post()
-- http::json()
 
-### cookie - Cookie Handlers
-- cookie::set()
-- cookie::get()
-- cookie::delete()
+### [db - Data Handlers (mysql w/ PDO)](https://github.com/hxgf/dbkit)
+- db::init($settings)
+- db::insert($table, $input)
+- db::find($table, $criteria, $options)
+- db::update($table, $input, $criteria)
+- db::delete($table, $criteria)
+- db::where_placeholders($criteria)
 
-### x - Misc Helpers
+
+
+### [http - HTTP Request Handlers](https://github.com/hxgf/http-request)
+- http::request($url, $parameters)
+- http::get($url, $parameters)
+- http::post($url, $parameters)
+- http::json($url, $parameters)
+
+### [cookie - Cookie Handlers](https://github.com/hxgf/cookie)
+- cookie::set($key, $value, $expiration_date)
+- cookie::get($key)
+- cookie::delete($key)
+
+### [x - Misc Utilities](https://github.com/hxgf/aux)
+- x::email_send($parameters)
 - x::client_ip()
-- x::email_send()
-- x::url_slug()
-- x::url_strip()
-- x::url_validate()
-- x::br2nl()
-- x::array_encode()
-- x::array_decode()
-
-
-### db::where_placeholders($criteria)
+- x::url_slug($string)
+- x::url_strip($url)
+- x::url_validate($url)
+- x::br2nl($string)
+- x::array_encode($array)
+- x::array_decode($string)

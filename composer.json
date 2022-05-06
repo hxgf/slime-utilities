@@ -10,7 +10,7 @@
       "email": "jy@hxgf.io"
 		}
 	],
-	"keywords": ["metaframework", "utilities"],
+	"keywords": ["metaframework", "utilities", "collection", "abstraction"],
 	"autoload": {
 		"psr-4": {
 			"Slime\\": ["src/"]
