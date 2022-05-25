@@ -64,7 +64,9 @@ class render {
 
   public static function hbs($req, $res, $args){
     $data = [];
-    $data['locals'] = $GLOBALS['locals'];
+    if (isset($GLOBALS['locals'])){
+      $data['locals'] = $GLOBALS['locals'];
+    }
     if (isset($args['data'])){
       $data = array_merge($data, $args['data']);
     }
