@@ -1,6 +1,6 @@
 <?php
 
-namespace Slime;
+namespace XUtilities;
 
 class x {
 
@@ -19,23 +19,23 @@ class x {
 	// send an email (with mailgun api, if available, otherwise use php mail)
 	public static function email_send($input){
     $message_html = false;
-		if ($input['html']){
+		if (isset($input['html'])){
       $message_html = $input['message'];					
 			$message_text = strip_tags(x::br2nl($message_html));	
 		}
-		if ($GLOBALS['settings']['mailgun']['api_key']){
+		if (isset($GLOBALS['settings']['mailgun']['api_key'])){
 			$message = array(
 				'from' => $input['from'],
 				'to' => $input['to'],
 				'subject' => $input['subject']
 			);
-			if ($input['cc']){
+			if (isset($input['cc'])){
 				$message['cc'] = $input['cc'];
 			}	
-			if ($input['reply_to']){
+			if (isset($input['reply_to'])){
 				$message['h:Reply-To'] = $input['reply_to'];
 			}
-			if ($input['bcc']){
+			if (isset($input['bcc'])){
 				$message['bcc'] = $input['bcc'];
 			}	
 			if ($message_html){
@@ -44,10 +44,10 @@ class x {
 			}else{
 				$message['text'] = $input['message'];
 			}
-			if ($input['preview']){
+			if (isset($input['preview'])){
 				echo $message;
 			}
-			if ($input['debug']){
+			if (isset($input['debug'])){
 				echo '<pre class="bg-black white">';
 				print_r($input);
 				echo "<hr />";
@@ -56,7 +56,7 @@ class x {
 				echo $message;
 				echo '</pre>';
 			}
-			if ($input['to'] && !$input['preview']&& !$input['debug']){
+			if (isset($input['to']) && !isset($input['preview']) && !isset($input['debug'])){
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, "https://api.mailgun.net/v3/".$GLOBALS['settings']['mailgun']['domain']."/messages");
         curl_setopt($ch, CURLOPT_HTTPAUTH, CURLAUTH_BASIC);
@@ -87,22 +87,22 @@ class x {
 			}else{
 				$message = $input['message'];
 			}
-			if ($input['from']){
+			if (isset($input['from'])){
 				$headers 	.= "From: " . $input['from'] . "\r\n";	
 			}		
-			if ($input['cc']){
+			if (isset($input['cc'])){
 				$headers 	.= "Cc: " . $input['cc'] . "\r\n";	
 			}		
-			if ($input['bcc']){
+			if (isset($input['bcc'])){
 				$headers 	.= "Bcc: " . $input['bcc'] . "\r\n";	
 			}		
-			if ($input['reply_to']){
+			if (isset($input['reply_to'])){
 				$headers 	.= "Reply-To: " . $input['reply_to'] . "\r\n";	
 			}
-			if ($input['preview']){
+			if (isset($input['preview'])){
 				echo $message;
 			}
-			if ($input['debug']){
+			if (isset($input['debug'])){
 				echo '<pre class="bg-black white">';
 				print_r($input);
 				echo "<hr />";
@@ -111,7 +111,7 @@ class x {
 				echo $message;
 				echo '</pre>';
 			}
-			if ($input['to'] && !$input['preview']&& !$input['debug']){
+			if (isset($input['to']) && !isset($input['preview']) && !isset($input['debug'])){
 				mail($input['to'], $input['subject'], $message, $headers);
 				return true;
 			}else{
