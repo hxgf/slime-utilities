@@ -1,6 +1,6 @@
 <?php
 
-namespace XUtilities;
+namespace Slime;
 
 class x {
 

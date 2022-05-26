@@ -1,6 +1,6 @@
 <?php
 
-namespace DBkit;
+namespace Slime;
 
 use PDO;
 

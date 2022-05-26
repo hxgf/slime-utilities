@@ -1,6 +1,6 @@
 <?php
 
-namespace HTTPRequest;
+namespace Slime;
 
 class http {
 
