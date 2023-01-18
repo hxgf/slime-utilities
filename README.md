@@ -35,8 +35,10 @@ Refer to the source packages for usage examples.
 
 ### [render - Render Content as PSR-7](https://github.com/hxgf/slime-render)
 - render::hbs($request, $response, $parameters)
+- render::redirect($request, $response, $parameters)
 - render::json($request, $response, $parameters)
 - render::lightncandy_html($parameters)($data)
+- render::initialize_handlebars_helpers()
 - render::twig($request, $response, $parameters)
 
 
@@ -46,7 +48,7 @@ Refer to the source packages for usage examples.
 - db::find($table, $criteria, $options)
 - db::update($table, $input, $criteria)
 - db::delete($table, $criteria)
-- db::where_placeholders($criteria)
+- db::create_placeholders($criteria)
 
 
 
@@ -57,7 +59,7 @@ Refer to the source packages for usage examples.
 - http::json($url, $parameters)
 
 ### [cookie - Cookie Handlers](https://github.com/hxgf/cookie)
-- cookie::set($key, $value, $expiration_date)
+- cookie::set($key, $value, $parameters)
 - cookie::get($key)
 - cookie::delete($key)
 
@@ -70,3 +72,7 @@ Refer to the source packages for usage examples.
 - x::br2nl($string)
 - x::array_encode($array)
 - x::array_decode($string)
+- x::console_log($input, $parameters)
+- x::dd($input, $parameters)
+- x::file_write($input, $target_filename, $parameters)
+- x::error_log($input, $parameters)

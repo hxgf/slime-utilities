@@ -1,16 +1,36 @@
 <?php
 
+/**
+ * @package    VPHP - Cookie
+ * @version    1.1.0
+ * @author     Jonathan Youngblood <jy@hxgf.io>
+ * @license    https://github.com/hxgf/cookie/blob/master/LICENSE.md (MIT License)
+ * @source     https://github.com/hxgf/cookie
+ */
+
 namespace Slime;
 
 class cookie {
 
 	// set a cookie
-	public static function set($k, $v, $time = false){
-		$expires = time() + 31536000000;
-		if ($time){
-			$expires = $time;
-		}
-		setcookie($k, $v, $expires, "/");
+	public static function set($k, $v, $args = array()){
+    $options['expires'] = isset($args['expires']) ? $args['expires'] : time() + 31536000000;
+    $options['path'] = isset($args['path']) ? $args['path'] : '/';
+
+    if (isset($args['domain'])){
+      $options['domain'] = $args['domain'];
+    }
+    if (isset($args['secure'])){
+      $options['secure'] = $args['secure'];
+    }
+    if (isset($args['httponly'])){
+      $options['httponly'] = $args['httponly'];
+    }
+    if (isset($args['samesite'])){
+      $options['samesite'] = $args['samesite'];
+    }
+
+		setcookie($k, $v, $options);
 		return true;
 	}
 

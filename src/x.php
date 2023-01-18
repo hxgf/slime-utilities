@@ -1,5 +1,13 @@
 <?php
 
+/**
+ * @package    VPHP - X-Utilities
+ * @version    1.2.0
+ * @author     Jonathan Youngblood <jy@hxgf.io>
+ * @license    https://github.com/hxgf/x-utilities/blob/master/LICENSE.md (MIT License)
+ * @source     https://github.com/hxgf/x-utilities
+ */
+
 namespace Slime;
 
 class x {
@@ -165,6 +173,67 @@ class x {
 	public static function array_decode($string){
 		return explode("|", $string);
 	}	
+
+  // inspect an array or object, with formatting enabled by default
+  public static function console_log($var, $args = array()){
+    if (!(isset($args['format']) && $args['format'] == false)){
+      $font_size = isset($args['style']['font-size']) ? $args['style']['font-size'] : '11px';
+      $background = isset($args['style']['background']) ? $args['style']['background'] : '#000';
+      $color = isset($args['style']['color']) ? $args['style']['color'] : '#eee';
+      $padding = isset($args['style']['padding']) ? $args['style']['padding'] : '13px';
+      $line_height = isset($args['style']['line_height']) ? $args['style']['line_height'] : '150%';
+      $custom = isset($args['style']['custom']) ? $args['style']['custom'] : '';
+      echo '<pre style="font-size: '.$font_size.'; background: '.$background.'; color: '.$color.'; padding: '.$padding.'; line-height: '.$line_height.'; '.$custom.'">';
+    }    
+    if (is_array($var)){
+      print_r($var);
+    }elseif (is_object($var)){
+      var_dump($var);
+    }else{
+      echo $var;
+    }
+    if (!(isset($args['format']) && $args['format'] == false)){
+      echo "</pre>";
+    }
+    return true;
+	}	
+
+  // append a string of text (or object, array) to a given file
+  public static function file_write($content, $target_file, $args = array()){
+    if (is_array($content)){
+      $content = print_r($content, true);
+    }
+    if (is_object($content)){
+      ob_start();
+      var_dump($content);
+      $content = ob_get_clean();      
+    }
+    $mode = isset($args['mode']) ? $args['mode'] : 'a';
+    $line_beginning = isset($args['line_beginning']) ? $args['line_beginning'] : '';
+    $line_ending = isset($args['line_ending']) ? $args['line_ending'] : PHP_EOL;
+    $fh = fopen($target_file, $mode) or die("Error: can't open file: " . $target_file);
+    fwrite($fh, $line_beginning . $content . $line_ending);
+    fclose($fh);
+    return true;
+  }
+
+  // dump variable (auto-detected array, object, string), then die
+  public static function dd($var, $args = array()){
+    x::console_log($var, $args);
+    die;
+  }
+
+  // append object, array, or string to error_log
+  public static function error_log($var){
+    if (is_array($var)){
+      $var = print_r($var, true);
+    }elseif (is_object($var)){
+      ob_start();
+      var_dump($var);
+      $var = ob_get_clean();      
+    }
+    error_log($var);
+  }
 
 }
 
