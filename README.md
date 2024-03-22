@@ -2,19 +2,19 @@
 
 ## Abstraction functions to promote a fast and easy development workflow with Slim.
 
-Most of these functions aren't specific to Slim and can be used in other contexts or on their own (except for the 'render' functions). We've bundled them together for convenience to be included with the [Slime boilerplate and metaframework](https://github.com/hxgf/slime).
+Most of these functions aren't specific to Slim and can be used in other contexts or on their own (except for the 'render' functions). We've bundled them together for convenience to be included with the [Slime boilerplate and metaframework](https://github.com/jyoungblood/slime).
 
 These functions are also available as separate packages:
-- [slime-render](https://github.com/hxgf/slime-render)
-- [dbkit](https://github.com/hxgf/dbkit)
-- [http-request](https://github.com/hxgf/http-request)
-- [cookie](https://github.com/hxgf/cookie)
-- [x-utilities](https://github.com/hxgf/x-utilities)
+- [slime-render](https://github.com/jyoungblood/slime-render)
+- [dbkit](https://github.com/jyoungblood/dbkit)
+- [http-request](https://github.com/jyoungblood/http-request)
+- [cookie](https://github.com/jyoungblood/cookie)
+- [x-utilities](https://github.com/jyoungblood/x-utilities)
 
 
 ## Installation
 ```
-composer require hxgf/slime-utilities
+composer require jyoungblood/slime-utilities
 ```
 
 ```php
@@ -33,7 +33,7 @@ require __DIR__ . '/vendor/autoload.php';
 
 Refer to the source packages for usage examples.
 
-### [render - Render Content as PSR-7](https://github.com/hxgf/slime-render)
+### [render - Render Content as PSR-7](https://github.com/jyoungblood/slime-render)
 - render::hbs($request, $response, $parameters)
 - render::redirect($request, $response, $parameters)
 - render::json($request, $response, $parameters)
@@ -42,7 +42,7 @@ Refer to the source packages for usage examples.
 - render::twig($request, $response, $parameters)
 
 
-### [db - Data Handlers (mysql w/ PDO)](https://github.com/hxgf/dbkit)
+### [db - Data Handlers (mysql w/ PDO)](https://github.com/jyoungblood/dbkit)
 - db::init($settings)
 - db::insert($table, $input)
 - db::find($table, $criteria, $options)
@@ -52,18 +52,18 @@ Refer to the source packages for usage examples.
 
 
 
-### [http - HTTP Request Handlers](https://github.com/hxgf/http-request)
+### [http - HTTP Request Handlers](https://github.com/jyoungblood/http-request)
 - http::request($url, $parameters)
 - http::get($url, $parameters)
 - http::post($url, $parameters)
 - http::json($url, $parameters)
 
-### [cookie - Cookie Handlers](https://github.com/hxgf/cookie)
+### [cookie - Cookie Handlers](https://github.com/jyoungblood/cookie)
 - cookie::set($key, $value, $parameters)
 - cookie::get($key)
 - cookie::delete($key)
 
-### [x - Misc Utilities](https://github.com/hxgf/x-utilities)
+### [x - Misc Utilities](https://github.com/jyoungblood/x-utilities)
 - x::email_send($parameters)
 - x::client_ip()
 - x::url_slug($string)

@@ -4,8 +4,8 @@
  * @package    VPHP - Cookie
  * @version    1.1.0
  * @author     Jonathan Youngblood <jy@hxgf.io>
- * @license    https://github.com/hxgf/cookie/blob/master/LICENSE.md (MIT License)
- * @source     https://github.com/hxgf/cookie
+ * @license    https://github.com/jyoungblood/cookie/blob/master/LICENSE.md (MIT License)
+ * @source     https://github.com/jyoungblood/cookie
  */
 
 namespace Slime;
